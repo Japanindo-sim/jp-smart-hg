@@ -1024,53 +1024,48 @@
                 const message = document.getElementById('swal-input-message').value;
 
                 if (!name || !whatsapp || !pkg) {
-                    Swal.showValidationMessage(`Nama, Nomor WhatsApp, dan Paket wajib diisi`);
-                    return false;
+                Swal.showValidationMessage(`Nama, Nomor WhatsApp, dan Paket wajib diisi`);
+                return false;
                 }
-                
+
                 if (!/^62\d{9,13}$/.test(whatsapp)) {
-                    Swal.showValidationMessage(`Format Nomor WhatsApp salah. Gunakan 62... (contoh: 628123456789)`);
-                    return false;
+                Swal.showValidationMessage(`Format Nomor WhatsApp salah. Gunakan 62... (contoh: 628123456789)`);
+                return false;
                 }
-                
+
                 return { name, whatsapp, pkg, email, message };
             }
-        }).then((result) => {
+            }).then((result) => {
             if (result.isConfirmed) {
                 const data = result.value;
                 const adminWhatsapp = '628118680139';
-                
-                let waMessage = `Halo Admin JP Smart SIM,
 
-Saya ingin mendaftar untuk paket SIM Card dengan detail berikut:
-- *Nama Lengkap:* ${data.name}
-- *Paket Dipilih:* ${data.pkg}
-- *Nomor WhatsApp:* ${data.whatsapp}`;
+                let waMessage = `Halo Admin JP Smart SIM,\n\nSaya ingin mendaftar untuk paket SIM Card dengan detail berikut:\n- *Nama Lengkap:* ${data.name}\n- *Paket Dipilih:* ${data.pkg}\n- *Nomor WhatsApp:* ${data.whatsapp}`;
 
                 if (data.email) {
-                    waMessage += `\n- *Email:* ${data.email}`;
+                waMessage += `\n- *Email:* ${data.email}`;
                 }
                 if (data.message) {
-                    waMessage += `\n- *Pesan Tambahan:* ${data.message}`;
+                waMessage += `\n- *Pesan Tambahan:* ${data.message}`;
                 }
                 waMessage += `\n\nMohon informasi langkah selanjutnya. Terima kasih.`;
-                
+
+
                 const whatsappUrl = `https://wa.me/${adminWhatsapp}?text=${encodeURIComponent(waMessage)}`;
+
+                window.open(whatsappUrl, '_blank');
                 
                 Swal.fire({
-                    title: 'Mengalihkan ke WhatsApp',
-                    text: 'Anda akan diarahkan ke WhatsApp untuk mengirim detail pendaftaran.',
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(() => {
-                    window.open(whatsappUrl, '_blank');
+                title: 'Berhasil!',
+                text: 'Formulir Anda sedang dialihkan ke WhatsApp.',
+                icon: 'success',
+                timer: 2500, 
+                showConfirmButton: false
                 });
             }
-        });
+         });
     }
     
-    // Modal Logic
     const modalContentData = {
         privacy: {
             title: 'Kebijakan Privasi',
@@ -1135,3 +1130,4 @@ Saya ingin mendaftar untuk paket SIM Card dengan detail berikut:
 
 </body>
 </html>
+
